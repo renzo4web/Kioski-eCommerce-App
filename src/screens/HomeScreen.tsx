@@ -1,57 +1,58 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React from 'react';
-import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
-import {styles} from '../theme/appTheme';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from 'react-native';
+import { styles as stylesGlobal } from '../theme/appTheme';
 import data from '../assets/data.json';
+import { Planet, Product } from '../types/types';
 
 interface Props extends StackScreenProps<any, any> {}
 
-export interface Planet {
-  name: string;
-  overview: Geology;
-  structure: Geology;
-  geology: Geology;
-  rotation: string;
-  revolution: string;
-  radius: string;
-  temperature: string;
-  images: Images;
-}
+const HomeScreen = ({ navigation }: Props) => {
+  const [products, setProducts] = useState<Product[]>([]);
 
-export interface Geology {
-  content: string;
-  source: string;
-}
+  useEffect(() => {
+    let current = true;
 
-export interface Images {
-  planet: string;
-  internal: string;
-  geology: string;
-}
+    fetch('https://fakestoreapi.com/products')
+      .then(res => res.json())
+      .then(json => {
+        if (current) {
+          console.log(json);
+          setProducts(json);
+        }
+      });
 
-const HomeScreen = ({navigation}: Props) => {
+    return () => {
+      current = false;
+    };
+  }, []);
+
   return (
-    <View style={styles.globalMargin}>
+    <View style={stylesGlobal.globalMargin}>
       <Text>Home</Text>
       <FlatList
-        data={data}
-        keyExtractor={({name}) => name}
-        renderItem={({item}: {item: Planet}) => {
+        data={products}
+        keyExtractor={({ id }: Product) => id.toString()}
+        renderItem={({ item: product }) => {
           return (
-            <View style={{alignSelf: 'center', marginVertical: 30}}>
+            <View style={styles.planetContainer}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Planet', {item})}>
+                onPress={() => navigation.navigate('Planet', { ...product })}>
                 <Image
-                  style={{
-                    width: 150,
-                    height: 150,
-                    resizeMode: 'stretch',
-                  }}
+                  style={styles.image}
                   source={{
-                    uri: item.images.planet,
+                    uri: product.image,
                   }}
                 />
-                <Text style={styles.title}>{item.name}</Text>
+                <Text style={stylesGlobal.title}>{product.title}</Text>
+                <Text style={stylesGlobal.title}>${product.price}</Text>
               </TouchableOpacity>
             </View>
           );
@@ -60,5 +61,18 @@ const HomeScreen = ({navigation}: Props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  image: {
+    width: 150,
+    height: 150,
+    resizeMode: 'stretch',
+  },
+
+  planetContainer: {
+    alignSelf: 'center',
+    marginVertical: 30,
+  },
+});
 
 export default HomeScreen;
