@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
 
+export const colors = {
+  primary: '#2a9d8f',
+  secondary: '#e76f51',
+};
+
 export const styles = StyleSheet.create({
   globalMargin: {
     marginHorizontal: 20,
   },
 
   title: {
-    color: 'white',
     fontWeight: 'bold',
     fontSize: 30,
     textAlign: 'center',

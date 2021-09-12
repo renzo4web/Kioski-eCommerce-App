@@ -3,11 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen';
 import ProductScreen from '../screens/ProductScreen';
-import { Planet } from '../types/types';
+import { Product } from '../types/types';
 
 export type RootStackParams = {
   Home: undefined;
-  Planet: Planet;
+  ProductScreen: Product;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -20,11 +20,11 @@ export const StackNavigator = () => {
         headerShown: false,
         presentation: 'modal',
         cardStyle: {
-          backgroundColor: 'rgb(7, 7, 36)',
+          backgroundColor: '#fff',
         },
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Planet" component={ProductScreen} />
+      <Stack.Screen name="ProductScreen" component={ProductScreen} />
     </Stack.Navigator>
   );
 };

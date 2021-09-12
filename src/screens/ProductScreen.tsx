@@ -2,17 +2,17 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { RootStackParams } from '../navigator/StackNavigator';
+import { Product } from '../types/types';
 
-interface Props extends StackScreenProps<RootStackParams, 'Planet'> {}
+interface Props extends StackScreenProps<RootStackParams, 'Product'> {}
 
 const ProductScreen = ({ route }: Props) => {
-  console.log(route.params);
-  const planet = route.params;
-  return (
-    <View>
-      <Text style={{ color: 'white' }}>{planet.name}</Text>
+  const product = route.params;
 
-      <Text style={{ color: 'white' }}>{planet.radius}</Text>
+  return (
+    <View style={{ flex: 1 }}>
+      <Text>{product.title}</Text>
+      <Text>{product.price}</Text>
     </View>
   );
 };

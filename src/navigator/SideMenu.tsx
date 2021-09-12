@@ -6,7 +6,6 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 
-import { StackNavigator } from './StackNavigator';
 import OrdersScreen from '../screens/OrdersScreen';
 import {
   GestureResponderEvent,
@@ -17,13 +16,13 @@ import {
   View,
 } from 'react-native';
 import { styles } from '../theme/appTheme';
+import { Tabs } from './Tabs';
 
 const Drawer = createDrawerNavigator();
 
 export const SideMenu = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
-  console.log(width);
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -31,11 +30,8 @@ export const SideMenu = () => {
         headerShown: width >= 700 ? false : true, // Oculta la hamburguesa
       }}
       drawerContent={props => <InternMenu {...props} />}>
-      <Drawer.Screen
-        name="StackNavigator"
-        options={{ title: 'Products' }}
-        component={StackNavigator}
-      />
+      <Drawer.Screen name="Tabs" component={Tabs} />
+
       <Drawer.Screen
         name="OrdersScreen"
         options={{ title: 'Orders' }}
@@ -61,7 +57,7 @@ const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
       {/* OPTIONS MENU CONTAINER */}
       {/* Only navigate to screens that Drawer.navigator contain */}
       <View style={styles.alignCenter}>
-        <MenuButton onPress={() => navigation.navigate('StackNavigator')}>
+        <MenuButton onPress={() => navigation.navigate('Tabs')}>
           Products
         </MenuButton>
         <MenuButton onPress={() => navigation.navigate('OrdersScreen')}>

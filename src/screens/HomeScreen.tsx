@@ -9,8 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { styles as stylesGlobal } from '../theme/appTheme';
-import data from '../assets/data.json';
-import { Planet, Product } from '../types/types';
+import { Product } from '../types/types';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -24,7 +23,6 @@ const HomeScreen = ({ navigation }: Props) => {
       .then(res => res.json())
       .then(json => {
         if (current) {
-          console.log(json);
           setProducts(json);
         }
       });
@@ -40,11 +38,13 @@ const HomeScreen = ({ navigation }: Props) => {
       <FlatList
         data={products}
         keyExtractor={({ id }: Product) => id.toString()}
-        renderItem={({ item: product }) => {
+        renderItem={({ item: product }: { item: Product }) => {
           return (
             <View style={styles.planetContainer}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Planet', { ...product })}>
+                onPress={() =>
+                  navigation.navigate('ProductScreen', { ...product })
+                }>
                 <Image
                   style={styles.image}
                   source={{
