@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Text, Platform } from 'react-native';
 
 import ShopCartTab from '../screens/ShopCartTab';
@@ -17,9 +18,9 @@ export const Tabs = () => {
 const iconNames: {
   [key: string]: string;
 } = {
-  StackNavigator: 'Home',
-  DealsTab: 'Deals',
-  ShopCartTab: 'Cart',
+  TopTabNavigator: 'home',
+  DealsTab: 'flame',
+  ShopCartTab: 'cart',
 };
 
 const BottomTabAndroid = createMaterialBottomTabNavigator();
@@ -34,9 +35,10 @@ const TabsAndroid = () => {
         tabBarActiveTintColor: colors.primary,
         tabBarLabelStyle: {
           fontSize: 20,
+          fontWeight: 'bold',
         },
         tabBarIcon: ({ color }) => {
-          return <Text style={{ color: color }}>{iconNames[route.name]}</Text>;
+          return <Icon name={iconNames[route.name]} size={25} color="#000" />;
         },
       })}>
       <BottomTabAndroid.Screen
