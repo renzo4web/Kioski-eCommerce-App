@@ -1,13 +1,18 @@
 import React from 'react';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StackNavigator } from './StackNavigator';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { Text, Platform } from 'react-native';
+
 import ShopCartTab from '../screens/ShopCartTab';
 import { colors } from '../theme/appTheme';
 import DealsTab from '../screens/DealsTab';
-import { Text } from 'react-native';
+import { TopTabNavigator } from './TopTabNavigator';
 
-const Tab = createBottomTabNavigator();
+const BottomTabIOS = createBottomTabNavigator();
+
+export const Tabs = () => {
+  return Platform.OS === 'ios' ? <TabsIOS /> : <TabsAndroid />;
+};
 
 const iconNames: {
   [key: string]: string;
@@ -17,9 +22,47 @@ const iconNames: {
   ShopCartTab: 'Cart',
 };
 
-export const Tabs = () => {
+const BottomTabAndroid = createMaterialBottomTabNavigator();
+
+const TabsAndroid = () => {
   return (
-    <Tab.Navigator
+    <BottomTabAndroid.Navigator
+      initialRouteName="TopTabNavigator"
+      activeColor="orange"
+      barStyle={{ backgroundColor: colors.primary }}
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: colors.primary,
+        tabBarLabelStyle: {
+          fontSize: 20,
+        },
+        tabBarIcon: ({ color }) => {
+          return <Text style={{ color: color }}>{iconNames[route.name]}</Text>;
+        },
+      })}>
+      <BottomTabAndroid.Screen
+        name="TopTabNavigator"
+        options={{ title: 'Home' }}
+        component={TopTabNavigator}
+      />
+
+      <BottomTabAndroid.Screen
+        name="DealsTab"
+        options={{ title: 'Deals' }}
+        component={DealsTab}
+      />
+
+      <BottomTabAndroid.Screen
+        name="ShopCartTab"
+        options={{ title: 'Cart' }}
+        component={ShopCartTab}
+      />
+    </BottomTabAndroid.Navigator>
+  );
+};
+
+const TabsIOS = () => {
+  return (
+    <BottomTabIOS.Navigator
       initialRouteName="HomeScreen"
       sceneContainerStyle={{
         backgroundColor: '#fff',
@@ -29,27 +72,27 @@ export const Tabs = () => {
         tabBarLabelStyle: {
           fontSize: 20,
         },
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ color }) => {
           return <Text style={{ color: color }}>{iconNames[route.name]}</Text>;
         },
       })}>
-      <Tab.Screen
-        name="StackNavigator"
+      <BottomTabIOS.Screen
+        name="TopTabNavigator"
         options={{ title: 'Home' }}
-        component={StackNavigator}
+        component={TopTabNavigator}
       />
 
-      <Tab.Screen
+      <BottomTabIOS.Screen
         name="DealsTab"
         options={{ title: 'Deals' }}
         component={DealsTab}
       />
 
-      <Tab.Screen
+      <BottomTabIOS.Screen
         name="ShopCartTab"
         options={{ title: 'Cart' }}
         component={ShopCartTab}
       />
-    </Tab.Navigator>
+    </BottomTabIOS.Navigator>
   );
 };

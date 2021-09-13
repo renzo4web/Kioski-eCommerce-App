@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { styles as stylesGlobal } from '../theme/appTheme';
 import { Product } from '../types/types';
+import { fetchProducts } from '../utils/fetch';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -19,13 +20,11 @@ const HomeScreen = ({ navigation }: Props) => {
   useEffect(() => {
     let current = true;
 
-    fetch('https://fakestoreapi.com/products')
-      .then(res => res.json())
-      .then(json => {
-        if (current) {
-          setProducts(json);
-        }
-      });
+    fetchProducts().then(data => {
+      if (current) {
+        setProducts(data);
+      }
+    });
 
     return () => {
       current = false;
@@ -34,7 +33,6 @@ const HomeScreen = ({ navigation }: Props) => {
 
   return (
     <View style={stylesGlobal.globalMargin}>
-      <Text>Home</Text>
       <FlatList
         data={products}
         keyExtractor={({ id }: Product) => id.toString()}
@@ -67,6 +65,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     resizeMode: 'stretch',
+    alignSelf: 'center',
   },
 
   planetContainer: {

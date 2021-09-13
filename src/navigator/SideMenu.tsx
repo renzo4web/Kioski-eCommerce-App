@@ -26,8 +26,8 @@ export const SideMenu = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
-        drawerType: width >= 700 ? 'permanent' : 'front', // Menú modo horizontal
-        headerShown: width >= 700 ? false : true, // Oculta la hamburguesa
+        drawerType: width >= 700 ? 'permanent' : 'front',
+        headerShown: width >= 700 ? false : true,
       }}
       drawerContent={props => <InternMenu {...props} />}>
       <Drawer.Screen name="Tabs" component={Tabs} />
