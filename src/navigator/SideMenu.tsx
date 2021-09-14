@@ -1,12 +1,5 @@
 import React from 'react';
-
-import {
-  createDrawerNavigator,
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-} from '@react-navigation/drawer';
-
-import OrdersScreen from '../screens/OrdersScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   GestureResponderEvent,
   Image,
@@ -15,6 +8,14 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+} from '@react-navigation/drawer';
+
+import OrdersScreen from '../screens/OrdersScreen';
 import { styles } from '../theme/appTheme';
 import { Tabs } from './Tabs';
 
@@ -30,7 +31,13 @@ export const SideMenu = () => {
         headerShown: width >= 700 ? false : true,
       }}
       drawerContent={props => <InternMenu {...props} />}>
-      <Drawer.Screen name="Tabs" component={Tabs} />
+      <Drawer.Screen
+        name="Tabs"
+        options={{
+          headerShown: false,
+        }}
+        component={Tabs}
+      />
 
       <Drawer.Screen
         name="OrdersScreen"
@@ -43,25 +50,45 @@ export const SideMenu = () => {
 
 const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
   return (
-    <DrawerContentScrollView>
+    <DrawerContentScrollView
+      contentContainerStyle={styles.drawerContentContainer}>
       {/* AVATAR CONTAINER */}
-      <View style={styles.alignCenter}>
+      <View style={styles.containerAvatar}>
         <Image
           style={styles.avatar}
           source={{
             uri: 'https://avatars.githubusercontent.com/u/73029154?v=4',
           }}
         />
+        <View style={{ flex: 1 }}>
+          <Text>User Naem</Text>
+          <Text style={{ fontWeight: 'bold' }}>@user.com</Text>
+        </View>
       </View>
 
       {/* OPTIONS MENU CONTAINER */}
       {/* Only navigate to screens that Drawer.navigator contain */}
-      <View style={styles.alignCenter}>
-        <MenuButton onPress={() => navigation.navigate('Tabs')}>
+      <View style={styles.sideMenuContainer}>
+        <MenuButton
+          onPress={() => navigation.navigate('Tabs')}
+          iconName="home-outline">
           Products
         </MenuButton>
-        <MenuButton onPress={() => navigation.navigate('OrdersScreen')}>
+        <MenuButton
+          onPress={() => navigation.navigate('OrdersScreen')}
+          iconName="calendar-outline">
           Orders
+        </MenuButton>
+      </View>
+
+      {/* SIGN OUT */}
+
+      <View style={styles.signOutContainer}>
+        <MenuButton
+          iconPosition="left"
+          onPress={() => console.log('click')}
+          iconName="log-out-outline">
+          Sign out
         </MenuButton>
       </View>
     </DrawerContentScrollView>
@@ -71,13 +98,25 @@ const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
 function MenuButton({
   onPress,
   children,
+  iconName,
+  iconPosition = 'left',
 }: {
   onPress: (event: GestureResponderEvent) => void;
   children: string;
+  iconName: string;
+  iconPosition?: 'left' | 'right';
 }) {
   return (
     <TouchableOpacity style={styles.drawerBtn} onPress={onPress}>
-      <Text style={styles.drawerText}>{children}</Text>
+      {iconPosition === 'left'
+        ? [
+            <Icon name={iconName} size={30} />,
+            <Text style={styles.drawerText}>{children}</Text>,
+          ]
+        : [
+            <Text style={styles.drawerText}>{children}</Text>,
+            <Icon name={iconName} size={30} />,
+          ]}
     </TouchableOpacity>
   );
 }

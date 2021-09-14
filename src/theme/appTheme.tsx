@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
 
   title: {
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 15,
     textAlign: 'center',
     marginVertical: 10,
   },
@@ -24,20 +24,49 @@ export const styles = StyleSheet.create({
   },
 
   drawerText: {
-    fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 20,
+    marginLeft: 15,
   },
 
   drawerBtn: {
     padding: 5,
-    borderRadius: 10,
-    borderColor: 'gray',
-    borderStyle: 'dotted',
-    borderWidth: 3,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   avatar: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+
+  containerAvatar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginVertical: 20,
+    paddingHorizontal: 10,
+  },
+
+  sideMenuContainer: {
+    paddingHorizontal: 10,
+    alignSelf: 'flex-start',
+    flex: 2,
+  },
+
+  drawerContentContainer: {
+    flex: 1,
+    paddingVertical: 30,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+
+  signOutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginRight: 'auto',
+    width: '90%',
   },
 });
