@@ -12,7 +12,7 @@ import { useAppState } from '../context/ProductsContext/ProductsContext';
 type ProductCardProp = StackNavigationProp<RootStackParams, 'ProductScreen'>;
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const { addToFavorites, productState } = useAppState();
+  const { toggleFavorites, productState } = useAppState();
   const navigation = useNavigation<ProductCardProp>();
 
   const isFavorite = productState.favorites.includes(product.id);
@@ -20,7 +20,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   return (
     <View style={styles.productContainer}>
       {/* FAVORITE TOUCH */}
-      <TouchableOpacity onPress={() => addToFavorites(product.id)}>
+      <TouchableOpacity onPress={() => toggleFavorites(product.id)}>
         <Icon
           name={isFavorite ? 'heart' : 'heart-outline'}
           size={25}
@@ -73,6 +73,8 @@ const styles = StyleSheet.create({
     shadowRadius: 1.0,
 
     elevation: 1,
+    backgroundColor: '#fff',
+    borderRadius: 10,
   },
 });
 

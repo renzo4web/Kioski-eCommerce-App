@@ -1,26 +1,23 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { productReducer } from '../../reducer/productsReducer';
+import { Product } from '../../types/types';
 
-interface Product {
-  id: string;
-  name: string;
-  proce: number;
-  quantity?: number;
-  isFavorite: boolean;
+export interface ProductCart extends Product {
+  quantity: number;
+  isFavorite?: boolean;
 }
 
 export interface ProductState {
   total: number;
-  cart: Product[];
+  cart: ProductCart[];
   favorites: number[];
 }
 
 export interface ProductContextProps {
   productState: ProductState;
-  addToCart: (id: number) => void;
-  addToFavorites: (id: number) => void;
+  toggleProductCart: (product: Product) => void;
+  toggleFavorites: (id: number) => void;
   increaseQuantity: (id: number) => void;
-  // add to favorites
 }
 /*
  * Context
@@ -41,13 +38,22 @@ export const ProductsProvider: React.FC = ({ children }) => {
     productInitialState,
   );
 
-  const addToCart = (id: number) => {
-    dispatch({ type: 'ADD_TO_CART' });
+  const { favorites, cart } = productState;
+
+  const toggleProductCart = (product: Product) => {
+    dispatch({
+      type: cart.find(item => item.id === product.id)
+        ? 'REMOVE_FROM_CART'
+        : 'ADD_TO_CART',
+      payload: { ...product, quantity: 1 },
+    });
   };
 
-  const addToFavorites = (id: number) => {
+  const toggleFavorites = (id: number) => {
     dispatch({
-      type: 'ADD_TO_FAVORITES',
+      type: favorites.includes(id)
+        ? 'REMOVE_FROM_FAVORITES'
+        : 'ADD_TO_FAVORITES',
       payload: id,
     });
   };
@@ -56,15 +62,15 @@ export const ProductsProvider: React.FC = ({ children }) => {
     <ProductContext.Provider
       value={{
         productState,
-        addToCart,
+        toggleProductCart,
         increaseQuantity: id => {},
-        addToFavorites,
+        toggleFavorites,
       }}>
       {children}
     </ProductContext.Provider>
   );
 };
 
-export const useAppState = () => {
+export const useAppState = (): ProductContextProps => {
   return useContext(ProductContext);
 };

@@ -13,7 +13,7 @@ const ShopCartTab = () => {
       {isCartEmpty ? (
         <Text>Nothing in the cart</Text>
       ) : (
-        <Text>{productState.cart}</Text>
+        <Text>{JSON.stringify(productState.cart, null, 2)}</Text>
       )}
     </View>
   );

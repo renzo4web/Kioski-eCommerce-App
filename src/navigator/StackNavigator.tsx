@@ -20,7 +20,7 @@ export const StackNavigator = () => {
         headerShown: false,
         presentation: 'modal',
         cardStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: '#eeeeee',
         },
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
