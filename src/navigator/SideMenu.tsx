@@ -28,7 +28,7 @@ export const SideMenu = () => {
     <Drawer.Navigator
       screenOptions={{
         drawerType: width >= 700 ? 'permanent' : 'front',
-        headerShown: width >= 700 ? false : true,
+        headerShown: width < 700,
       }}
       drawerContent={props => <InternMenu {...props} />}>
       <Drawer.Screen
@@ -70,12 +70,12 @@ const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
       {/* Only navigate to screens that Drawer.navigator contain */}
       <View style={styles.sideMenuContainer}>
         <MenuButton
-          onPress={() => navigation.navigate('Tabs')}
+          onPress={() => navigation.navigate('Tabs','')}
           iconName="home-outline">
           Products
         </MenuButton>
         <MenuButton
-          onPress={() => navigation.navigate('OrdersScreen')}
+          onPress={() => navigation.navigate('OrdersScreen','')}
           iconName="calendar-outline">
           Orders
         </MenuButton>

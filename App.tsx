@@ -1,15 +1,25 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { SideMenu } from './src/navigator/SideMenu';
+import {NavigationContainer} from '@react-navigation/native';
+import {SideMenu} from './src/navigator/SideMenu';
+import {ProductsProvider} from "./src/context/ProductsContext/ProductsContext";
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      {/* <StackNavigator /> */}
-      <SideMenu />
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <AppState>
+                <SideMenu/>
+            </AppState>
+        </NavigationContainer>
+    );
 };
+
+const AppState: React.FC = ({children}) => {
+    return (
+        <ProductsProvider>
+            {children}
+        </ProductsProvider>
+    )
+}
 
 export default App;
