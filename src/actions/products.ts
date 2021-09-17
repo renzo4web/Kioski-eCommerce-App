@@ -12,6 +12,6 @@ export type ProductsAction =
     }
   | {
       type: 'ADD_TO_FAVORITES';
-      payload: number;
+      payload: Product;
     }
-  | { type: 'REMOVE_FROM_FAVORITES'; payload: number };
+  | { type: 'REMOVE_FROM_FAVORITES'; payload: Product };

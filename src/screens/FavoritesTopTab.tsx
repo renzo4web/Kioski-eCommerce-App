@@ -1,10 +1,24 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
+import { FlatGrid } from 'react-native-super-grid';
+import ProductCard from '../components/ProductCard';
+import { useAppState } from '../context/ProductsContext/ProductsContext';
 
 const FavoritesTopTab = () => {
+  const {
+    productState: { favorites },
+  } = useAppState();
+
   return (
     <View>
-      <Text>FavoritesTopTab</Text>
+      <FlatGrid
+        data={favorites}
+        itemDimension={130}
+        keyExtractor={({ id }) => id.toString()}
+        renderItem={({ item }) => {
+          return <ProductCard product={item} />;
+        }}
+      />
     </View>
   );
 };

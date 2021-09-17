@@ -15,12 +15,14 @@ const ProductCard = ({ product }: { product: Product }) => {
   const { toggleFavorites, productState } = useAppState();
   const navigation = useNavigation<ProductCardProp>();
 
-  const isFavorite = productState.favorites.includes(product.id);
+  const isFavorite = productState.favorites.find(
+    item => item.id === product.id,
+  );
 
   return (
     <View style={styles.productContainer}>
       {/* FAVORITE TOUCH */}
-      <TouchableOpacity onPress={() => toggleFavorites(product.id)}>
+      <TouchableOpacity onPress={() => toggleFavorites(product)}>
         <Icon
           name={isFavorite ? 'heart' : 'heart-outline'}
           size={25}
@@ -52,29 +54,27 @@ const ProductCard = ({ product }: { product: Product }) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 120,
+    alignSelf: 'center',
     height: 120,
     resizeMode: 'stretch',
-    alignSelf: 'center',
+    width: 120,
   },
-
   productContainer: {
     alignSelf: 'center',
-    padding: 10,
-    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    elevation: 1,
     flex: 1,
-    width: '100%',
+    justifyContent: 'space-between',
+    padding: 10,
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
       height: 1,
+      width: 0,
     },
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
-
-    elevation: 1,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    width: '100%',
   },
 });
 

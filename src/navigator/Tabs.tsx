@@ -38,7 +38,13 @@ const TabsAndroid = () => {
           fontWeight: 'bold',
         },
         tabBarIcon: ({ color }) => {
-          return <Icon name={iconNames[route.name]} size={25} color="#000" />;
+          return (
+            <Icon
+              name={iconNames[route.name]}
+              size={25}
+              color={colors.secondary}
+            />
+          );
         },
       })}>
       <BottomTabAndroid.Screen

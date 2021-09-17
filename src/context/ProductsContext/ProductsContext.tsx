@@ -10,13 +10,13 @@ export interface ProductCart extends Product {
 export interface ProductState {
   total: number;
   cart: ProductCart[];
-  favorites: number[];
+  favorites: Product[];
 }
 
 export interface ProductContextProps {
   productState: ProductState;
   toggleProductCart: (product: Product) => void;
-  toggleFavorites: (id: number) => void;
+  toggleFavorites: (id: Product) => void;
   increaseQuantity: (id: number) => void;
 }
 /*
@@ -49,12 +49,12 @@ export const ProductsProvider: React.FC = ({ children }) => {
     });
   };
 
-  const toggleFavorites = (id: number) => {
+  const toggleFavorites = (product: Product) => {
     dispatch({
-      type: favorites.includes(id)
+      type: favorites.find(item => item.id === product.id)
         ? 'REMOVE_FROM_FAVORITES'
         : 'ADD_TO_FAVORITES',
-      payload: id,
+      payload: product,
     });
   };
 

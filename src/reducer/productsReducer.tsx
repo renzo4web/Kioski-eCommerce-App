@@ -16,22 +16,22 @@ export const productReducer = (
       };
 
     case 'ADD_TO_FAVORITES':
-      let favorites: number[] = state.favorites || [];
       return {
         ...state,
+        // if product is already in the cart
         cart: state.cart.map(el =>
-          el.id === action.payload ? { ...el, isFavorite: true } : el,
+          el.id === action.payload.id ? { ...el, isFavorite: true } : el,
         ),
-        favorites: [...favorites, action.payload],
+        favorites: [...state.favorites, action.payload],
       };
 
     case 'REMOVE_FROM_FAVORITES':
       return {
         ...state,
         cart: state.cart.map(el =>
-          el.id === action.payload ? { ...el, isFavorite: false } : el,
+          el.id === action.payload.id ? { ...el, isFavorite: false } : el,
         ),
-        favorites: state.favorites.filter(fav => fav !== action.payload),
+        favorites: state.favorites.filter(fav => fav.id !== action.payload.id),
       };
 
     default:
