@@ -11,7 +11,7 @@ const CheckoutResult: React.FC<Props> = ({ subtotal, total }) => {
   total = Number(total.toFixed(2));
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={{ alignItems: 'center', marginVertical: 20 }}>
       <CheckoutResultText title="Subtotal" usd={subtotal} />
       <CheckoutResultText title="Shipping" usd={4.99} />
       <CheckoutResultText title="Total" usd={total} />

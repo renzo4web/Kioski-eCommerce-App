@@ -40,12 +40,13 @@ const HomeScreen = ({ navigation }: { navigation: Props }) => {
 
   return (
     <View style={{ width: '100%', flex: 1 }}>
-      <TouchableOpacity onPress={() => navigation.toggleDrawer() as any}>
+      <TouchableOpacity
+        style={{ marginHorizontal: 10 }}
+        onPress={() => navigation.toggleDrawer()}>
         <Icon name="menu-outline" size={40} />
       </TouchableOpacity>
-
+      <CategoriesList onChange={handleChangeCategorie} />
       <FlatGrid
-        ListHeaderComponent={() => <CategoriesList onChange={handleChangeCategorie} />}
         data={
           currentCategorie !== 'all'
             ? products.filter(product => product.category === currentCategorie)

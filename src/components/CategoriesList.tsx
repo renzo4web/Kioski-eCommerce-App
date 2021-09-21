@@ -15,10 +15,10 @@ const CategoriesList = ({ onChange }: { onChange: (categorie: string) => void })
     <FlatList
       numColumns={2}
       columnWrapperStyle={styles.row}
-      style={{
+      contentContainerStyle={{
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginVertical: 20,
+        marginVertical: 10,
       }}
       data={categories}
       keyExtractor={categorie => categorie}

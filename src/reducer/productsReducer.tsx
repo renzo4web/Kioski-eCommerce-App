@@ -57,6 +57,7 @@ export const productReducer = (
 
       return {
         ...state,
+        cart: [],
         orders: [...state.orders, order],
       };
 

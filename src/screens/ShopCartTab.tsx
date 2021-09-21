@@ -1,10 +1,18 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 
 import { useAppState } from '../context/ProductsContext/ProductsContext';
 import ProductCheckout from '../components/ProductCheckout';
 import CheckoutResult from '../components/CheckoutResult';
+import { colors } from '../theme/appTheme';
 
 const ShopCartTab = () => {
   const {
@@ -25,22 +33,36 @@ const ShopCartTab = () => {
         <Text>Nothing in the cart</Text>
       ) : (
         <>
-          <FlatList
-            data={cart}
-            keyExtractor={cart => cart.id.toString()}
-            renderItem={({ item }) => <ProductCheckout product={item} />}
-          />
-          <CheckoutResult subtotal={subtotal} total={total} />
-          <TouchableOpacity onPress={() => checkoutOrder()}>
-            <Text>CHECKOUT</Text>
-          </TouchableOpacity>
+          <View style={{ marginHorizontal: 10 }}>
+            <FlatList
+              data={cart}
+              keyExtractor={cart => cart.id.toString()}
+              renderItem={({ item }) => <ProductCheckout product={item} />}
+            />
+            <CheckoutResult subtotal={subtotal} total={total} />
+            <TouchableOpacity
+              style={styles.touchContainer}
+              onPress={() => checkoutOrder()}>
+              <Text style={styles.touchCheckout}>CHECKOUT</Text>
+            </TouchableOpacity>
+          </View>
         </>
       )}
     </View>
   );
 };
 
-
-
+const styles = StyleSheet.create({
+  touchContainer: {
+    alignItems: 'center',
+  },
+  touchCheckout: {
+    paddingHorizontal: 20,
+    fontSize: 30,
+    borderRadius: 20,
+    backgroundColor: colors.primary,
+    color: colors.secondary,
+  },
+});
 
 export default ShopCartTab;

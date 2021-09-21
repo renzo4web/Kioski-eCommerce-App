@@ -48,6 +48,21 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
+  containerCard: {
+    elevation: 1,
+    flex: 1,
+    justifyContent: 'space-between',
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    width: '100%',
+  },
+
   sideMenuContainer: {
     paddingHorizontal: 10,
     alignSelf: 'flex-start',
