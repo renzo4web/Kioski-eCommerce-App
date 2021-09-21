@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import ProductScreen from '../screens/ProductScreen';
 import { Product } from '../types/types';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 export type RootStackParams = {
   Home: undefined;

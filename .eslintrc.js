@@ -6,4 +6,11 @@ module.exports = {
     'prettier/prettier': 0,
     'react/jsx-uses-react': 0,
   },
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: 'module',
+    ecmaFeatures: {
+      modules: true,
+    },
+  },
 };

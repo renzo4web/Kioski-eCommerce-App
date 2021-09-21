@@ -2,7 +2,6 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import CategoryTopTab from '../screens/CategoryTopTab';
 import FavoritesTopTab from '../screens/FavoritesTopTab';
 import { StackNavigator } from './StackNavigator';
 import { colors } from '../theme/appTheme';
@@ -40,11 +39,6 @@ export const TopTabNavigator = () => {
         name="StackNavigator"
         options={{ title: 'All Products' }}
         component={StackNavigator}
-      />
-      <Tab.Screen
-        name="CategoryTopTab"
-        options={{ title: 'Categories' }}
-        component={CategoryTopTab}
       />
       <Tab.Screen
         name="FavoritesTopTab"

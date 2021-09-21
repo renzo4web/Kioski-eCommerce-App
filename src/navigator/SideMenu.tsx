@@ -50,8 +50,7 @@ export const SideMenu = () => {
 
 const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
   return (
-    <DrawerContentScrollView
-      contentContainerStyle={styles.drawerContentContainer}>
+    <DrawerContentScrollView contentContainerStyle={styles.drawerContentContainer}>
       {/* AVATAR CONTAINER */}
       <View style={styles.containerAvatar}>
         <Image
@@ -69,13 +68,11 @@ const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
       {/* OPTIONS MENU CONTAINER */}
       {/* Only navigate to screens that Drawer.navigator contain */}
       <View style={styles.sideMenuContainer}>
-        <MenuButton
-          onPress={() => navigation.navigate('Tabs','')}
-          iconName="home-outline">
+        <MenuButton onPress={() => navigation.navigate('Tabs')} iconName="home-outline">
           Products
         </MenuButton>
         <MenuButton
-          onPress={() => navigation.navigate('OrdersScreen','')}
+          onPress={() => navigation.navigate('OrdersScreen')}
           iconName="calendar-outline">
           Orders
         </MenuButton>
@@ -95,28 +92,32 @@ const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
   );
 };
 
+interface MenuButtonProps {
+  onPress: (event: GestureResponderEvent) => void;
+  children: string;
+  iconName: string;
+  iconPosition?: 'left' | 'right';
+}
+
 function MenuButton({
   onPress,
   children,
   iconName,
   iconPosition = 'left',
-}: {
-  onPress: (event: GestureResponderEvent) => void;
-  children: string;
-  iconName: string;
-  iconPosition?: 'left' | 'right';
-}) {
+}: MenuButtonProps) {
   return (
     <TouchableOpacity style={styles.drawerBtn} onPress={onPress}>
-      {iconPosition === 'left'
-        ? [
-            <Icon name={iconName} size={30} />,
-            <Text style={styles.drawerText}>{children}</Text>,
-          ]
-        : [
-            <Text style={styles.drawerText}>{children}</Text>,
-            <Icon name={iconName} size={30} />,
-          ]}
+      {iconPosition === 'left' ? (
+        <>
+          <Icon name={iconName} size={30} />
+          <Text style={styles.drawerText}>{children}</Text>
+        </>
+      ) : (
+        <>
+          <Text style={styles.drawerText}>{children}</Text>
+          <Icon name={iconName} size={30} />
+        </>
+      )}
     </TouchableOpacity>
   );
 }
