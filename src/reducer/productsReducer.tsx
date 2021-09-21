@@ -34,6 +34,32 @@ export const productReducer = (
         favorites: state.favorites.filter(fav => fav.id !== action.payload.id),
       };
 
+    case 'INCREASE_QUANTITY':
+      return {
+        ...state,
+        cart: state.cart.map(el =>
+          el.id === action.payload ? { ...el, quantity: el.quantity + 1 } : el,
+        ),
+      };
+
+    case 'DECREASE_QUANTITY':
+      return {
+        ...state,
+        cart: state.cart.map(el =>
+          el.id === action.payload
+            ? { ...el, quantity: el.quantity > 1 ? el.quantity - 1 : 1 }
+            : el,
+        ),
+      };
+
+    case 'CHECKOUT':
+      const order = { orderId: new Date().getTime(), items: [...state.cart] };
+
+      return {
+        ...state,
+        orders: [...state.orders, order],
+      };
+
     default:
       return state;
   }

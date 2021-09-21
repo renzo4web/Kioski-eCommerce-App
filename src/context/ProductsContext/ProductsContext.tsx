@@ -7,17 +7,25 @@ export interface ProductCart extends Product {
   isFavorite?: boolean;
 }
 
+export interface ProductOrder {
+  orderId: number;
+  items: ProductCart[];
+}
+
 export interface ProductState {
   total: number;
   cart: ProductCart[];
   favorites: Product[];
+  orders: ProductOrder[];
 }
 
 export interface ProductContextProps {
   productState: ProductState;
   toggleProductCart: (product: Product) => void;
   toggleFavorites: (id: Product) => void;
-  increaseQuantity: (id: number) => void;
+  increaseProductUnit: (id: number) => void;
+  decreaseProductUnit: (id: number) => void;
+  checkoutOrder: () => void;
 }
 /*
  * Context
@@ -30,13 +38,11 @@ export const productInitialState: ProductState = {
   total: 0,
   cart: [],
   favorites: [],
+  orders: [],
 };
 
 export const ProductsProvider: React.FC = ({ children }) => {
-  const [productState, dispatch] = useReducer(
-    productReducer,
-    productInitialState,
-  );
+  const [productState, dispatch] = useReducer(productReducer, productInitialState);
 
   const { favorites, cart } = productState;
 
@@ -58,13 +64,35 @@ export const ProductsProvider: React.FC = ({ children }) => {
     });
   };
 
+  const increaseProductUnit = (id: number) => {
+    dispatch({
+      type: 'INCREASE_QUANTITY',
+      payload: id,
+    });
+  };
+
+  const decreaseProductUnit = (id: number) => {
+    dispatch({
+      type: 'DECREASE_QUANTITY',
+      payload: id,
+    });
+  };
+
+  const checkoutOrder = () => {
+    dispatch({
+      type: 'CHECKOUT',
+    });
+  };
+
   return (
     <ProductContext.Provider
       value={{
         productState,
         toggleProductCart,
-        increaseQuantity: id => {},
         toggleFavorites,
+        increaseProductUnit,
+        decreaseProductUnit,
+        checkoutOrder,
       }}>
       {children}
     </ProductContext.Provider>

@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }: { navigation: Props }) => {
   return (
     <View style={{ width: '100%', flex: 1 }}>
       <TouchableOpacity onPress={() => navigation.toggleDrawer() as any}>
-        <Icon name="menu-outline" size={25} />
+        <Icon name="menu-outline" size={40} />
       </TouchableOpacity>
 
       <FlatGrid
