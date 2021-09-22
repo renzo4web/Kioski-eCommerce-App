@@ -4,27 +4,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductCart, useAppState } from '../context/ProductsContext/ProductsContext';
 
 const ProductCheckout = ({ product }: { product: ProductCart }) => {
-  const { increaseProductUnit, decreaseProductUnit, toggleProductCart } = useAppState();
+  const { toggleProductCart, increaseProductUnit, decreaseProductUnit } = useAppState();
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        marginVertical: 10,
-        backgroundColor: '#fff',
-        elevation: 1,
-        flex: 1,
-        justifyContent: 'space-between',
-        padding: 10,
-        shadowColor: '#000',
-        shadowOffset: {
-          height: 1,
-          width: 0,
-        },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.0,
-        width: '100%',
-      }}>
+    <View style={styles.container}>
       <Image
         style={styles.image}
         source={{
@@ -35,13 +18,16 @@ const ProductCheckout = ({ product }: { product: ProductCart }) => {
         <Text style={styles.title}>{product.title}</Text>
         <Text style={styles.price}>${product.price}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => increaseProductUnit(product.id)}>
-            <Icon name="add-circle-outline" size={30} />
-          </TouchableOpacity>
+          <TouchQuantity
+            increase={true}
+            handlePress={() => increaseProductUnit(product.id)}
+          />
           <Text style={styles.quantity}>{product.quantity}</Text>
-          <TouchableOpacity onPress={() => decreaseProductUnit(product.id)}>
-            <Icon name="remove-circle-outline" size={30} />
-          </TouchableOpacity>
+          <TouchQuantity
+            increase={false}
+            handlePress={() => decreaseProductUnit(product.id)}
+          />
+
           <TouchableOpacity
             style={{ marginLeft: 30 }}
             onPress={() => toggleProductCart(product)}>
@@ -53,7 +39,39 @@ const ProductCheckout = ({ product }: { product: ProductCart }) => {
   );
 };
 
+interface TouchProps {
+  increase: boolean;
+  handlePress: () => void;
+}
+
+const TouchQuantity = ({ increase, handlePress }: TouchProps) => {
+  const iconName = increase ? 'add-circle-outline' : 'remove-circle-outline';
+
+  return (
+    <TouchableOpacity onPress={handlePress!}>
+      <Icon name={iconName} size={30} />
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    backgroundColor: '#fff',
+    elevation: 1,
+    flex: 1,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    width: '100%',
+  },
+
   image: {
     width: 100,
     height: 100,

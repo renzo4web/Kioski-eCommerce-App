@@ -1,10 +1,15 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import TouchNavigation from '../components/TouchNavigation';
 import { ProductOrder, useAppState } from '../context/ProductsContext/ProductsContext';
 import { styles } from '../theme/appTheme';
 
-const OrdersScreen = () => {
+interface Props {
+  navigate: (dir: string) => void;
+}
+
+const OrdersScreen = ({ navigation }: { navigation: Props }) => {
   const {
     productState: { orders },
   } = useAppState();
@@ -12,7 +17,18 @@ const OrdersScreen = () => {
   return (
     <View>
       {orders?.length === 0 ? (
-        <Text>Orders Screen</Text>
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: 30,
+          }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 30 }}>Your cart is empty</Text>
+
+          <TouchNavigation
+            title="Continue Shopping"
+            goTo={() => navigation.navigate('TopTabNavigator')}
+          />
+        </View>
       ) : (
         <View>
           <FlatList

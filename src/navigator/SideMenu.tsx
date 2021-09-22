@@ -60,8 +60,8 @@ const InternMenu = ({ navigation }: DrawerContentComponentProps) => {
           }}
         />
         <View style={{ flex: 1 }}>
-          <Text>User Naem</Text>
-          <Text style={{ fontWeight: 'bold' }}>@user.com</Text>
+          <Text>renzo</Text>
+          <Text style={{ fontWeight: 'bold' }}>renzo4web@user.com</Text>
         </View>
       </View>
 

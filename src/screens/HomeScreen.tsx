@@ -1,17 +1,15 @@
-import { StackScreenProps } from '@react-navigation/stack';
-import { FlatGrid } from 'react-native-super-grid';
-import Icon from 'react-native-vector-icons/Ionicons';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatGrid } from 'react-native-super-grid';
+import ModalSelector from 'react-native-modal-selector';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import { Product } from '../types/types';
 import { fetchProducts } from '../utils/fetch';
 import { RootStackParams } from '../navigator/StackNavigator';
 import ProductCard from '../components/ProductCard';
 import { shuffle } from '../utils/shuffle';
-import { colors } from '../theme/appTheme';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import CategoriesList from '../components/CategoriesList';
 
 interface Props extends DrawerNavigationProp<RootStackParams, 'Home'> {}
 
@@ -38,14 +36,49 @@ const HomeScreen = ({ navigation }: { navigation: Props }) => {
     setCurrentCategorie(categorie);
   }, []);
 
+  const categories = [
+    { label: 'all', key: 'all' },
+    { label: 'electronics', key: 'electronics' },
+    { label: 'jewelery', key: 'jewelery' },
+    { label: "men's clothing", key: "men's clothing" },
+    { label: "women's clothing", key: "women's clothing" },
+  ];
+
   return (
     <View style={{ width: '100%', flex: 1 }}>
-      <TouchableOpacity
-        style={{ marginHorizontal: 10 }}
-        onPress={() => navigation.toggleDrawer()}>
-        <Icon name="menu-outline" size={40} />
-      </TouchableOpacity>
-      <CategoriesList onChange={handleChangeCategorie} />
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginVertical: 20,
+        }}>
+        <TouchableOpacity
+          style={{ marginHorizontal: 10 }}
+          onPress={() => navigation.toggleDrawer()}>
+          <Icon name="menu-outline" size={40} />
+        </TouchableOpacity>
+
+        <ModalSelector
+          data={categories}
+          initValue="Select Categorie"
+          onChange={({ label }) => handleChangeCategorie(label)}>
+          <Text
+            style={{
+              borderWidth: 1,
+              backgroundColor: '#000',
+              paddingVertical: 10,
+              paddingHorizontal: 5,
+              borderRadius: 20,
+              borderColor: '#ccc',
+              color: '#fff',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+            {currentCategorie}
+          </Text>
+        </ModalSelector>
+      </View>
+
       <FlatGrid
         data={
           currentCategorie !== 'all'
@@ -61,7 +94,5 @@ const HomeScreen = ({ navigation }: { navigation: Props }) => {
     </View>
   );
 };
-
-
 
 export default HomeScreen;

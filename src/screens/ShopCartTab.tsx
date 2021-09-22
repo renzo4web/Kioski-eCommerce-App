@@ -1,20 +1,14 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { useAppState } from '../context/ProductsContext/ProductsContext';
 import ProductCheckout from '../components/ProductCheckout';
 import CheckoutResult from '../components/CheckoutResult';
 import { colors } from '../theme/appTheme';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import TouchNavigation from '../components/TouchNavigation';
 
-const ShopCartTab = () => {
+const ShopCartTab = ({ navigation }: BottomTabBarProps) => {
   const {
     productState: { cart },
     checkoutOrder,
@@ -28,9 +22,26 @@ const ShopCartTab = () => {
   const total = subtotal + 4.99;
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       {isCartEmpty ? (
-        <Text>Nothing in the cart</Text>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            marginTop: 30,
+          }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 30 }}>Your cart is empty</Text>
+
+          <TouchNavigation
+            title="Continue Shopping"
+            goTo={() => navigation.navigate('TopTabNavigator')}
+          />
+
+          <TouchNavigation
+            title="Check your orders"
+            goTo={() => navigation.navigate('OrdersScreen')}
+          />
+        </View>
       ) : (
         <>
           <View style={{ marginHorizontal: 10 }}>
