@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FlatGrid } from 'react-native-super-grid';
 import ModalSelector from 'react-native-modal-selector';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { Product } from '../types/types';
 import { fetchProducts } from '../utils/fetch';
@@ -46,12 +46,7 @@ const HomeScreen = ({ navigation }: { navigation: Props }) => {
 
   return (
     <View style={{ width: '100%', flex: 1 }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginVertical: 20,
-        }}>
+      <View style={styles.containerTop}>
         <TouchableOpacity
           style={{ marginHorizontal: 10 }}
           onPress={() => navigation.toggleDrawer()}>
@@ -62,20 +57,7 @@ const HomeScreen = ({ navigation }: { navigation: Props }) => {
           data={categories}
           initValue="Select Categorie"
           onChange={({ label }) => handleChangeCategorie(label)}>
-          <Text
-            style={{
-              borderWidth: 1,
-              backgroundColor: '#000',
-              paddingVertical: 10,
-              paddingHorizontal: 5,
-              borderRadius: 20,
-              borderColor: '#ccc',
-              color: '#fff',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-            {currentCategorie}
-          </Text>
+          <Text style={styles.categoryText}>{currentCategorie}</Text>
         </ModalSelector>
       </View>
 
@@ -94,5 +76,25 @@ const HomeScreen = ({ navigation }: { navigation: Props }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  categoryText: {
+    alignItems: 'center',
+    backgroundColor: '#000',
+    borderColor: '#ccc',
+    borderRadius: 5,
+    borderWidth: 1,
+    color: '#fff',
+    fontWeight: 'bold',
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    textAlign: 'center',
+  },
+  containerTop: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 20,
+  },
+});
 
 export default HomeScreen;
