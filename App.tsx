@@ -23,3 +23,5 @@ const AppState: React.FC = ({children}) => {
 }
 
 export default App;
+
+/* Copyright Renzo Barrios 2021. All Rights Reserved */
