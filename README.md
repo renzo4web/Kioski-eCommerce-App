@@ -68,3 +68,5 @@ Some builds from npm included bugs while `npm install`. So if you are using a np
 - If trying to run on a device, read the following guide: http://facebook.github.io/react-native/docs/running-on-device-android.html#content
 
 Congratulations! You've just successfully run the project as an iOS or Android App.
+
+/* Copyright Renzo Barrios 2021. All Rights Reserved */
